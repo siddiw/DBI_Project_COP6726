@@ -16,7 +16,7 @@ typedef enum {ERROR, DEBUG, INFO} logLevel;
 class DBFile {
 
 private:
-	Record *currentRecord;
+	Record *currentReadRecord;
 	File *diskFile;
 	//File diskFile;
 	Page* writePage;
@@ -25,6 +25,7 @@ private:
 	bool dirtyBit;
 	off_t writePageIndex;
 	off_t readPageIndex;
+	bool isCurrentEnd;
 	
 
 public:
