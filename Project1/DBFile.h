@@ -9,13 +9,29 @@
 #include "ComparisonEngine.h"
 
 typedef enum {heap, sorted, tree} fType;
+typedef enum {ERROR, DEBUG, INFO} logLevel;
 
 // stub DBFile header..replace it with your own DBFile.h 
 
 class DBFile {
 
+private:
+	Record *currentRecord;
+	File *diskFile;
+	//File diskFile;
+	Page* writePage;
+	//Page writePage;
+	Page* readPage;
+	bool dirtyBit;
+	off_t writePageIndex;
+	off_t readPageIndex;
+	
+
 public:
 	DBFile (); 
+	~DBFile (); 
+
+	//void InternalLogger(logLevel level, char[] logMessage);
 
 	int Create (const char *fpath, fType file_type, void *startup);
 	int Open (const char *fpath);
