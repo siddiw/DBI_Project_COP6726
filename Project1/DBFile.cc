@@ -9,8 +9,6 @@
 
 #include <iostream>
 
-// stub file .. replace it with your own DBFile.cc
-
 // Default Constructor
 DBFile::DBFile () 
 {
@@ -18,7 +16,7 @@ DBFile::DBFile ()
     currentReadRecord = new Record();
     writePage = new Page();
     readPage = new Page();
-    //logfile
+    //TODO: logfile
 }
 
 // Default Destructor
@@ -30,9 +28,9 @@ DBFile::~DBFile ()
     delete readPage;
 }
 
+// Creates the main diskfile
 int DBFile::Create (const char *f_path, fType f_type, void *startup) 
 {
-    cout<<"Create\n";
     if (f_type == heap)
     {
         diskFile->Open(0, (char *)f_path);
@@ -46,9 +44,9 @@ int DBFile::Create (const char *f_path, fType f_type, void *startup)
     return 1; //success
 }
 
+// Loads multiple records into the DB
 void DBFile::Load (Schema &f_schema, const char *loadpath) 
 {
-    cout<<"Load\n";
     FILE *bulkFile = fopen(loadpath, "r");
     Record tempRecord;
 
@@ -65,86 +63,49 @@ void DBFile::Load (Schema &f_schema, const char *loadpath)
     fclose(bulkFile);
 }
 
+// Opens the main file
 int DBFile::Open (const char *f_path) 
 {
-    cout<<"Open\n";
     diskFile->Open(1, (char *)f_path);
     writePageIndex = 0;
     dirtyBit = false;
     isCurrentEnd = false;
     MoveFirst();
-    return 1; // success
+    return 1;
 }
 
+// Moves currentReadRecord to first record of the file
 void DBFile::MoveFirst () 
 {
-    cout<<"Movefirst\n";
     if (diskFile->GetLength() > 0)
     {
         readPage->EmptyItOut();
         diskFile->GetPage(this->readPage,0);
         readPage->GetFirst(currentReadRecord);
     }
-    cout << "MoveFirst() length of file is " << diskFile->GetLength() << "\n";
-
-    // should check for dirtyBit?
-    // diskFile->GetPage(readPage, 1);
-    // readPage->GetFirst(currentRecord);
-
-    // if (dirtyBit == 1) {
-    //     diskFile->AddPage(writePage, writePageIndex);
-    //     dirtyBit = 0;
-    // }
-    // writePageIndex = 0;
-    // writePage->EmptyItOut();
-    // //If DBfile is not empty
-    // if (diskFile->GetLength() > 0) {
-    //     diskFile->GetPage(writePage, writePageIndex);
-    // }
-    // //Delete After testing
-    // cout << "length of file is " << diskFile->GetLength() << "\n";
-
-    // if (dirtyBit == 1) {
-    //     diskFile->AddPage(writePage, writePageIndex);
-    //     dirtyBit = 0;
-    // }
-    // writePageIndex = 0;
-    // writePage->EmptyItOut();
-    // //If DBfile is not empty
-    // if (diskFile->GetLength() > 0) {
-    //     diskFile->GetPage(writePage, writePageIndex);
-    // }
-    // //Delete After testing
-    // cout << "length of file is " << diskFile->GetLength() << "\n";
 }
 
+// Close the opened "file"
 int DBFile::Close () 
 {
-    // if (dirtyBit == true)
-    // {
-    //     diskFile->AddPage(writePage, writePageIndex);
-    //     writePageIndex++;
-    // }
-    // // TODO: Add a logger function - avoid cout
-    // cout<<"\nLength of closed file: "<<diskFile->Close();
-    // return 1;
-
-    cout<<"Close\n";   
-    if (dirtyBit == 1)
+    if (dirtyBit == true)
+    {
         diskFile->AddPage(writePage, writePageIndex);
-    isCurrentEnd = true;
-    diskFile->Close();
-    cout << "Closing file, length of file is " << diskFile->GetLength() << "Pages" << "\n";
+        writePageIndex++;
+    }
+    // TODO: Add a logger function - avoid cout
+    cout<<"\nLength of closed file: "<<diskFile->Close();
     return 1;
 }
 
+// Add a single record
 void DBFile::Add (Record &rec) 
 {
-    cout<<"Add\n";
-    // works
     dirtyBit = true;
 
     Record tempWriteRecord;
+    
+    // Consume the record, will set "rec" to NULL
     tempWriteRecord.Consume(&rec);
 
     int status = writePage->Append(&tempWriteRecord);
@@ -159,9 +120,9 @@ void DBFile::Add (Record &rec)
     }
 }
 
+// Get the record pointed bu currentReadRecord
 int DBFile::GetNext (Record &fetchme) 
 {
-    cout<<"GetNext 1\n";
     if (isCurrentEnd != true)
     {
         fetchme.Copy(currentReadRecord);
@@ -185,31 +146,14 @@ int DBFile::GetNext (Record &fetchme)
         return 1;
     }
     return 0;
-
-    //If file is writing, then write page into disk based file, redirect page ot first page
-    // if (dirtyBit == 1) {
-    //     MoveFirst();
-    // }
-    // //If reach the end of page
-    // if (writePage->GetFirst(&fetchme) == 0) {
-    //     writePageIndex++;
-    //     //If reach the end of file
-    //     if (writePageIndex >= diskFile->GetLength() - 1) {
-    //         return 0;
-    //     }
-    //     //Else get next page
-    //     writePage->EmptyItOut();
-    //     diskFile->GetPage(writePage, writePageIndex);
-    //     writePage->GetFirst(&fetchme);
-    // }
-    // return 1;
 }
 
+// Get the next matching record to the given CNF
 int DBFile::GetNext (Record &fetchme, CNF &cnf, Record &literal) 
 {
-    cout<<"GetNext 2\n";
     ComparisonEngine comp;
-    //If not reach the end of file
+
+    // While there are still records
     while (GetNext(fetchme) == 1) {
         if (comp.Compare(&fetchme, &literal, &cnf) == 1)
             return 1;
@@ -217,6 +161,7 @@ int DBFile::GetNext (Record &fetchme, CNF &cnf, Record &literal)
     return 0;
 }
 
+// TODO: Logger function
 // void DBFile::InternalLogger (logLevel level, char[] logMessage)
 // {
 //     // TODO: Add logfile

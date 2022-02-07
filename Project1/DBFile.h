@@ -16,23 +16,21 @@ typedef enum {ERROR, DEBUG, INFO} logLevel;
 class DBFile {
 
 private:
-	Record *currentReadRecord;
-	File *diskFile;
-	//File diskFile;
-	Page* writePage;
-	//Page writePage;
-	Page* readPage;
-	bool dirtyBit;
-	off_t writePageIndex;
-	off_t readPageIndex;
-	bool isCurrentEnd;
+	Record *currentReadRecord;	// Current Read Record
+	File *diskFile;				// Main Disk File (dbfile)
+	Page* writePage;			// Write Buffer Page - used for Add, Load
+	Page* readPage;				// Read Buffer Page - used for GetNext, MoveFirst
+	bool dirtyBit;				// True when Write Buffer Page has unsaved changes
+	off_t writePageIndex;		// Write Page Offset
+	off_t readPageIndex;		// Read Page Offset
+	bool isCurrentEnd;			// True when currentReadRecord is pointing to last record of the file
 	
 
 public:
 	DBFile (); 
 	~DBFile (); 
 
-	//void InternalLogger(logLevel level, char[] logMessage);
+	//TODO: void InternalLogger(logLevel level, char[] logMessage);
 
 	int Create (const char *fpath, fType file_type, void *startup);
 	int Open (const char *fpath);
