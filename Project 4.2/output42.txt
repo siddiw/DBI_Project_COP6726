@@ -1,0 +1,540 @@
+**************************************** TC 1 ****************************************
+
+Enter your SQL: 
+SELECT n.n_nationkey
+FROM nation AS n 
+WHERE (n.n_name = 'UNITED STATES')
+^D
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 1 from left record = Att 0 from literal record (String)) 
+####################
+
+####################
+Project Operation
+Input Pipe 2
+Output Pipe 3
+
+Output Schema:
+Att n.n_nationkey: INT
+
+Attributes to keep:
+(0)
+####################
+
+**************************************** TC 1 ends ****************************************
+
+**************************************** TC 2 ****************************************
+
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 0 from left record > Att 0 from literal record (Int)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 4
+Right Input Pipe 2
+Output Pipe 5
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+( Att 2 from left record = Att 0 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+Project Operation
+Input Pipe 5
+Output Pipe 6
+
+Output Schema:
+Att n.n_name: STRING
+
+Attributes to keep:
+(1)
+####################
+
+**************************************** TC 2 ends ****************************************
+
+
+**************************************** TC 3 ****************************************
+
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 1 from left record = Att 0 from literal record (String)) 
+####################
+
+####################
+Project Operation
+Input Pipe 2
+Output Pipe 3
+
+Output Schema:
+Att n.n_nationkey: INT
+
+Attributes to keep:
+(0)
+####################
+
+
+Enter your SQL: 
+SELECT n.n_name
+FROM nation AS n, region AS r
+WHERE (n.n_regionkey = r.r_regionkey) AND (n.n_nationkey > 5)
+^D
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 0 from left record > Att 0 from literal record (Int)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 4
+Right Input Pipe 2
+Output Pipe 5
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+( Att 2 from left record = Att 0 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+Project Operation
+Input Pipe 5
+Output Pipe 6
+
+Siddhis-MacBook-Pro:P5_Siddhi siddhiw$ ./a42.out 
+
+Enter your SQL: 
+SELECT SUM (n.n_nationkey) 
+FROM nation AS n, region AS r 
+WHERE (n.n_regionkey = r.r_regionkey) AND (n.n_name = 'UNITED STATES')
+
+^D
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 1 from left record = Att 0 from literal record (String)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 4
+Right Input Pipe 2
+Output Pipe 5
+
+Output Schema:
+Att n.n_nationkey: INT
+Siddhis-MacBook-Pro:P5_Siddhi siddhiw$ ./a42.out 
+
+Enter your SQL: 
+SELECT SUM (n.n_nationkey) 
+FROM nation AS n, region AS r 
+WHERE (n.n_regionkey = r.r_regionkey) AND (n.n_name = 'UNITED STATES')
+
+^D
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 1 from left record = Att 0 from literal record (String)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 4
+Right Input Pipe 2
+Output Pipe 5
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+( Att 2 from left record = Att 0 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+SUM operation
+Left Input Pipe 5
+Output Pipe 6
+
+Output Schema:
+Att SUM: INT
+
+Corresponding Function: 
+PushInt at index 0 for given record 
+Original litInput is: 0x0
+returnsInt: 1
+####################
+
+**************************************** TC 3 ends ****************************************
+
+**************************************** TC 4 ****************************************
+
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 1 from left record = Att 0 from literal record (String)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 4
+Right Input Pipe 2
+Output Pipe 5
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+( Att 2 from left record = Att 0 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+GROUPBY operation
+Left Input Pipe 5
+Output Pipe 6
+
+Output Schema:
+Att SUM: INT
+
+Corresponding OrderMaker: 
+NumAtts =     1
+  0:     2 Int
+
+Corresponding Function: 
+PushInt at index 2 for given record 
+Original litInput is: 0x0
+returnsInt: 1
+####################
+
+**************************************** TC 4 ends ****************************************
+
+
+**************************************** TC 5 ****************************************
+
+You Sql has been parsed
+Optimal Plan has been built
+
+Current OUTPUT MODE: NONE
+--------------
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 6
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+
+Corresponding CNF: 
+( Att 0 from left record > Att 0 from literal record (Int)) 
+####################
+
+####################
+Join operation
+Left Input Pipe 6
+Right Input Pipe 4
+Output Pipe 7
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+( Att 2 from left record = Att 0 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 4
+
+Output Schema:
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+Join operation
+Left Input Pipe 7
+Right Input Pipe 2
+Output Pipe 8
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+Att c.c_custkey: INT
+Att c.c_name: STRING
+Att c.c_address: STRING
+Att c.c_nationkey: INT
+Att c.c_phone: STRING
+Att c.c_acctbal: DOUBLE
+Att c.c_mktsegment: STRING
+Att c.c_comment: STRING
+
+Corresponding CNF: 
+( Att 0 from left record = Att 3 from right record (Int)) 
+####################
+
+####################
+Select File operation
+Input Pipe 0
+Output Pipe 2
+
+Output Schema:
+Att c.c_custkey: INT
+Att c.c_name: STRING
+Att c.c_address: STRING
+Att c.c_nationkey: INT
+Att c.c_phone: STRING
+Att c.c_acctbal: DOUBLE
+Att c.c_mktsegment: STRING
+Att c.c_comment: STRING
+
+Corresponding CNF: 
+####################
+
+####################
+Duplicate remove operation
+Left Input Pipe 8
+Output Pipe 9
+
+Output Schema:
+Att n.n_nationkey: INT
+Att n.n_name: STRING
+Att n.n_regionkey: INT
+Att n.n_comment: STRING
+Att r.r_regionkey: INT
+Att r.r_name: STRING
+Att r.r_comment: STRING
+Att c.c_custkey: INT
+Att c.c_name: STRING
+Att c.c_address: STRING
+Att c.c_nationkey: INT
+Att c.c_phone: STRING
+Att c.c_acctbal: DOUBLE
+Att c.c_mktsegment: STRING
+Att c.c_comment: STRING
+####################
+
+####################
+GROUPBY operation
+Left Input Pipe 9
+Output Pipe 10
+
+Output Schema:
+Att SUM: INT
+
+Corresponding OrderMaker: 
+NumAtts =     1
+  0:     4 Int
+
+Corresponding Function: 
+PushInt at index 0 for given record 
+Original litInput is: 0x0
+PushInt at index 4 for given record 
+Original litInput is: 0x0
+IntPlus at index 0 for given record 
+Original litInput is: 0x0
+returnsInt: 1
+####################
+
+**************************************** TC 5 ends ****************************************
+
