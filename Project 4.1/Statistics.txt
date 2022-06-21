@@ -1,0 +1,36 @@
+Relation: part numOfTuple: 21433
+joinedRel: lineitem
+joinedRel: part
+Attribute: p_container numOfDistinct: 40
+Attribute: p_partkey numOfDistinct: 200000
+EndOfRelation
+Relation: lineitem numOfTuple: 21433
+joinedRel: lineitem
+joinedRel: part
+Attribute: l_shipmode numOfDistinct: 7
+Attribute: l_shipinstruct numOfDistinct: 4
+Attribute: l_partkey numOfDistinct: 200000
+EndOfRelation
+Relation: orders numOfTuple: 2000405
+joinedRel: customer
+joinedRel: lineitem
+joinedRel: nation
+joinedRel: orders
+Attribute: o_orderkey numOfDistinct: 1500000
+Attribute: o_custkey numOfDistinct: 150000
+EndOfRelation
+Relation: customer numOfTuple: 2000405
+joinedRel: customer
+joinedRel: lineitem
+joinedRel: nation
+joinedRel: orders
+Attribute: c_custkey numOfDistinct: 150000
+Attribute: c_nationkey numOfDistinct: 25
+EndOfRelation
+Relation: nation numOfTuple: 2000405
+joinedRel: customer
+joinedRel: lineitem
+joinedRel: nation
+joinedRel: orders
+Attribute: n_nationkey numOfDistinct: 25
+EndOfRelation
